@@ -4,7 +4,7 @@
 	<groupId>com.clicksign</groupId>
 	<artifactId>clicksign-java</artifactId>
 	<packaging>jar</packaging>
-	<version>0.9.0</version>
+	<version>0.9.1-ME</version>
 	<name>clicksign-java</name>
 	<url>https://github.com/clicksign/clicksign-java</url>
 	<dependencies>
@@ -55,7 +55,8 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
+			<!--FIXME: Got to comment this plugin in order to make it install/deploy-->
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<executions>
@@ -67,13 +68,13 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import com.clicksign.models.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,6 +18,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -221,6 +223,9 @@ public class ClicksignResource {
 			Object value = entry.getValue();
 			if (value instanceof File) {
 				builder.addPart(key, new FileBody((File) value));
+			} else if (value instanceof DocumentFile) {
+				DocumentFile f = (DocumentFile) value;
+				builder.addPart(key, new ByteArrayBody(f.getBytes(), f.getFilename()));
 			} else if (value instanceof SignatureList) {
 				List<Signature> signatureList = ((SignatureList) value).getSignatures();
 

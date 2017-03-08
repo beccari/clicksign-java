@@ -106,31 +106,48 @@ public class Document extends ClicksignResource {
 				accessToken);
 	}
 
-	public static Document create(File file) throws ClicksignException {
-		return create(file, null, null, null, null);
-	}
+    public static Document create(File file) throws ClicksignException {
+        return create(new DocumentFile(file));
+    }
 
-	public static Document create(File file, String accessToken) throws ClicksignException {
-		return create(file, null, null, null, accessToken);
-	}
+    public static Document create(DocumentFile file) throws ClicksignException {
+        return create(file, null, null, null, null);
+    }
 
-	public static Document create(File file, List<Signature> signers) throws ClicksignException {
-		return create(file, signers, null, null, null);
-	}
+    public static Document create(File file, String accessToken) throws ClicksignException {
+        return create(new DocumentFile(file), accessToken);
+    }
 
-	public static Document create(File file, List<Signature> signers, String message, Boolean skipEmail,
-			String accessToken) throws ClicksignException {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("document[archive][original]", file);
-		if (signers != null) {
-			params.put("signers", new SignatureList(signers));
-		}
-		if (message != null) {
-			params.put("message", message);
-		}
-		if (skipEmail != null) {
-			params.put("skip_email", skipEmail);
-		}
+    public static Document create(DocumentFile file, String accessToken) throws ClicksignException {
+        return create(file, null, null, null, accessToken);
+    }
+
+    public static Document create(File file, List<Signature> signers) throws ClicksignException {
+        return create(new DocumentFile(file), signers);
+    }
+
+    public static Document create(DocumentFile file, List<Signature> signers) throws ClicksignException {
+        return create(file, signers, null, null, null);
+    }
+
+    public static Document create(File file, List<Signature> signers, String message, Boolean skipEmail,
+                                   String accessToken) throws ClicksignException {
+        return create(new DocumentFile(file), signers, message, skipEmail, accessToken);
+    }
+
+    private static Document create(DocumentFile file, List<Signature> signers, String message, Boolean skipEmail,
+                                   String accessToken) throws ClicksignException {
+        Map<String, Object> params = new HashMap<>();
+        params.put("document[archive][original]", file);
+        if (signers != null) {
+            params.put("signers", new SignatureList(signers));
+        }
+        if (message != null) {
+            params.put("message", message);
+        }
+        if (skipEmail != null) {
+            params.put("skip_email", skipEmail);
+        }
 
 		return request(RequestMethod.POST, UrlBuilder.classURL(Document.class), params, Document.class, accessToken);
 	}
